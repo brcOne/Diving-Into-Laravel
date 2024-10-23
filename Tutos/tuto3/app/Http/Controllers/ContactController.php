@@ -20,10 +20,11 @@ class ContactController extends Controller
             'message' => 'required',
         ]);
 
-        Mail::send('emails.contact', $data, function($message) use ($data) {
-            $message->to('votre_email@exemple.com', 'Destinataire')->subject('Nouveau message de contact');
+        Mail::raw("Nom: {$data['name']}\nEmail: {$data['email']}\nMessage: {$data['message']}", function ($message) use ($data) {
+            $message->to('amv.0280@gmail.com')
+                    ->subject('Nouveau message de contact');
         });
 
-        return redirect('/')->with('success', 'Votre message a bien été envoyé.');
+        return redirect('/contact')->with('success', 'Votre message a bien été envoyé.');
     }
 }
